@@ -21,13 +21,18 @@ row_counter += gaps_to_leave
 
 for i in range (days_in_month):
     row_counter += 1
+    current_day = str(i+1)
+
     if first_row == True: # Runs if this is the first row - to print the dashed spaces
         print ("S  M  T  W  T  F  S")
         print ("-- " * gaps_to_leave, end="")
         first_row = False
-    if row_counter==7: # If we are at the end of the week print and create a new line
+
+    if row_counter == 7: # If we are at the end of the week print and create a new line
         row_counter = 0
-        print(str(i+1))
-    elif i<9: # If the date is <10th print an extra sace (for better alignment)
-        print(str(i+1) + "  ", end="")
-    else: print(str(i+1) + " ", end="")
+        print(current_day)
+
+    elif int(current_day) < 10: # If the date is <10th print an extra sace (for better alignment)
+        print(current_day + "  ", end="")
+
+    else: print(current_day + " ", end="")
