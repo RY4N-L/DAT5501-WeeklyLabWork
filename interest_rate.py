@@ -1,3 +1,4 @@
+# Create a function that calculates the compound interest on a savings account.
 def CompoundInterestCalculator(savings, annualInterestRate, years):
 
     multiply = annualInterestRate/100
