@@ -12,7 +12,7 @@ days_dict = {
     "Sunday": 0
 }
 
-def generate_calendar(): # Code that take the number of days in the month and starting day of the month to create a 
+def generate_calendar(days_entry, day_var, calendar_inner_frame): # Code that take the number of days in the month and starting day of the month to create a calendar
     try:
         days_in_month = int(days_entry.get())
         starting_day = day_var.get()
@@ -37,43 +37,49 @@ def generate_calendar(): # Code that take the number of days in the month and st
             col = 0
             row += 1
 
-# GUI setup
-root = tk.Tk()
-root.title("Calendar Printer")
+def setup_calendar_gui():
+    root = tk.Tk()
+    root.title("Calendar Printer")
 
-tk.Label(root, text="Number of days in month:").pack()
-days_entry = tk.Entry(root)
-days_entry.pack()
+    tk.Label(root, text="Number of days in month:").pack()
+    days_entry = tk.Entry(root)
+    days_entry.pack()
 
-tk.Label(root, text="Starting day of the week:").pack()
-day_var = tk.StringVar(root)
-day_var.set("Monday")  # default value
-day_dropdown = tk.OptionMenu(root, day_var, *days_dict.keys())
-day_dropdown.pack()
+    tk.Label(root, text="Starting day of the week:").pack()
+    day_var = tk.StringVar(root)
+    day_var.set("Monday")  # default value
+    day_dropdown = tk.OptionMenu(root, day_var, *days_dict.keys())
+    day_dropdown.pack()
 
-# Button that runs function to create calendar
-tk.Button(root, text="Generate Calendar", command=generate_calendar).pack(pady=10)
+    # Scrollable calendar frame setup
+    canvas = tk.Canvas(root, height=300, width=515)
+    scrollbar = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
+    scrollable_frame = tk.Frame(canvas)
 
-
-# Scrollable calendar frame setup
-canvas = tk.Canvas(root, height=300, width = 515)
-scrollbar = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
-scrollable_frame = tk.Frame(canvas)
-
-scrollable_frame.bind(
-    "<Configure>",
-    lambda e: canvas.configure(
-        scrollregion=canvas.bbox("all")
+    scrollable_frame.bind(
+        "<Configure>",
+        lambda e: canvas.configure(
+            scrollregion=canvas.bbox("all")
+        )
     )
-)
 
-canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+    canvas.configure(yscrollcommand=scrollbar.set)
 
-canvas.pack(side="left", fill="both", expand=True)
-scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True)
+    scrollbar.pack(side="right", fill="y")
 
-calendar_inner_frame = tk.Frame(scrollable_frame)
-calendar_inner_frame.pack()
+    calendar_inner_frame = tk.Frame(scrollable_frame)
+    calendar_inner_frame.pack()
 
-root.mainloop()
+    # Button that runs function to create calendar
+    tk.Button(
+        root,
+        text="Generate Calendar",
+        command=lambda: generate_calendar(days_entry, day_var, calendar_inner_frame)
+    ).pack(pady=10)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    setup_calendar_gui()
