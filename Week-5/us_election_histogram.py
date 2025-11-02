@@ -45,7 +45,7 @@ candidate_vote_fractions = state_total_candidate_votes / total_candidate_votes
 #print(f"Total of vote fractions = {candidate_vote_fractions.sum()}")
 
 
-# Plot histogram (bar chart for categorical states)
+# Plot histogram for fraction of state votes for candidate
 state_fractions_sorted = state_fractions.sort_values(ascending=False)
 state_fractions_sorted.plot(kind='bar', title=f'Fraction of state votes for {candidate}', edgecolor='black')
 plt.xlabel('State')
@@ -54,7 +54,7 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
-# Plot histogram of candidate vote fractions by state
+# Plot histogram for fraction of candidate votes by state
 candidate_vote_fractions_sorted = candidate_vote_fractions.sort_values(ascending=False)
 candidate_vote_fractions_sorted.plot(kind='bar', title=f'Fraction of {candidate} Votes by State', edgecolor='black', color='orange')
 plt.xlabel('State')
