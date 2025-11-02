@@ -3,10 +3,19 @@ import matplotlib.pyplot as plt
 # Load the CSV with semicolon delimiter
 election_data_df = pd.read_csv('DAT5501_lab/Week-5/US-2016-primary.csv', delimiter=';')
 election_data_df.fillna(0, inplace=True)  # Fill NaN values with 0
-candidate = 'Donald Trump'
 
-# Filter for one candidate, e.g. John Kasich
-candidate_df = election_data_df[election_data_df['candidate'] == candidate]
+while True:
+    
+    candidate = input("Please enter the candidate's name (e.g. John Kasich):")
+    # Filter for one candidate, e.g. John Kasich
+    candidate_df = election_data_df[election_data_df['candidate'] == candidate]
+    
+    if candidate_df.empty: # If no data found for candidate, prompt again
+        print("Candidate not found. Please try again.")
+    
+    else:
+        break
+
 
 # Find the total number of votes for the candidate
 total_candidate_votes = candidate_df['votes'].sum()
