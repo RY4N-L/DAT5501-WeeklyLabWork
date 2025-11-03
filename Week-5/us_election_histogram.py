@@ -16,14 +16,20 @@ while True:
     # Use fuzzy matching to find the closest candidate name
     matched_candidate, score = process.extractOne(candidate, candidates)
 
-    if score >= 80:  # If the match score is high enough, use the matched name
-        print(f"Interpreted candidate name as: {matched_candidate}")
-        candidate = matched_candidate
-
-        # Filter for one candidate, e.g. John Kasich
+    if score == 100:  # If exact match, use the input name
         candidate_df = election_data_df[election_data_df['candidate'] == candidate]
         break
-    
+
+    elif score >= 80:  # If the match score is high enough, use the matched name
+        print(f"Did you mean: '{matched_candidate}'?... Matched with score {score}")
+        confirm = input("Type 'y' to confirm, or any other key to try again: ")
+        if confirm.lower() == 'y':
+            candidate = matched_candidate
+            candidate_df = election_data_df[election_data_df['candidate'] == candidate]
+            break
+        else:
+            continue
+
     else:
         # If no data found for candidate, prompt again
         print("Candidate not found. Please try again.")
