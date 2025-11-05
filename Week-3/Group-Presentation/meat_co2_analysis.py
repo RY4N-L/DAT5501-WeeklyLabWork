@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read the dataset
-df = pd.read_csv('Group-Presentation/meat_co2_data.csv')
+df = pd.read_csv('DAT5501_lab/Week-3/Group-Presentation/meat_co2_data.csv')
 
 # Clean column names (remove extra spaces)
 df.columns = [col.strip() for col in df.columns]
@@ -29,6 +29,7 @@ ax2.set_ylabel('Meat Consumption (kg/person)', color=color2, fontsize=15)
 ax2.tick_params(axis='y', labelcolor=color2)
 
 plt.title('Global Annual CO₂ Emissions and Meat Consumption (1990-2022)', fontsize=20)
+
 # Combine both lines in one legend
 lines = [line1, line2]
 labels = [line.get_label() for line in lines]
@@ -44,6 +45,7 @@ meat_pct = df['Total meat per year'].pct_change() * 100
 x = np.arange(len(years))
 bar_width = 0.4
 
+# Plotting percentage changes
 fig, ax = plt.subplots(figsize=(12,6))
 ax.bar(x - bar_width/2, co2_pct, width=bar_width, label='CO₂ % Change', color='tab:blue')
 ax.bar(x + bar_width/2, meat_pct, width=bar_width, label='Meat % Change', color='tab:red')
