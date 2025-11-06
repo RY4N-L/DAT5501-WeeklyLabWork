@@ -1,6 +1,11 @@
 # Create a function that calculates the compound interest on a savings account.
 def CompoundInterestCalculator(savings, annualInterestRate, years):
     """
+    Paremeters:
+    savings (float): The initial amount of money in the savings account.
+    annualInterestRate (float): The annual interest rate (in percentage).
+    years (int): The number of years to calculate the interest for.
+
     Calculate the compound interest on a savings account.
 
     Returns:
