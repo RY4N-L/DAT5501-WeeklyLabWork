@@ -40,12 +40,20 @@ for i in range(7, len(price_changes)):
 # Create x-axis values
 x_values = np.arange(7, len(times)+7)
 
+# Calculate n log n values for comparison
+n_log_n = x_values * np.log(x_values) 
+
 # Plot the graph
 plt.figure(figsize=(8, 4))
-plt.scatter(x_values, times, marker='o', linestyle='-', color='blue')
+
+# Plot scatter 
+#plt.scatter(x_values, times, marker='o', linestyle='-', color='blue')
+# Plot line graph 
+plt.plot(x_values, times, linestyle='-', color='blue')
+#plt.plot(x_values, n_log_n, label='n log n', color='red')
 plt.title('Daily Price Changes')
 plt.xlabel('Number of Price Changes Sorted')
-plt.ylabel('Price Change')
+plt.ylabel('Time')
 plt.grid(True)
 plt.tight_layout()
 plt.show()
