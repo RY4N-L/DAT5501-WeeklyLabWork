@@ -51,8 +51,8 @@ def generate_calendar(days_entry, day_var, calendar_inner_frame):
     col = gaps_to_leave
     for day in range(1, days_in_month + 1):
         colour = "white"
-        
-        match col:
+    
+        match col: # Colour weekends differently
             case 0: # Sunday
                 colour = "lightgrey"
             case 6: # Saturday
@@ -115,5 +115,5 @@ def setup_calendar_gui():
 
     root.mainloop() # Start the GUI infinite event loop
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Run the GUI setup function if this file is executed directly
     setup_calendar_gui()
