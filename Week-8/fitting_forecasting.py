@@ -2,8 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Create a dictionary to store the chi-squared values for different polynomial orders
+# Create a dictionary to store the chi-squared and bic values for different polynomial orders
 chi_squared_values = {}
+bic_values = {}
 
 # Load the CSV 
 population_data_df = pd.read_csv('DAT5501_lab/Week-8/population_data_owid.csv')
@@ -19,7 +20,10 @@ sample_population_data_df = population_data_df[(population_data_df['Year'] > 190
 
 def n_polynomial_fit(order, colour, linestyle):
     global chi_squared_values
-    global chi_squared_per_dof_values
+
+    if order == 2:
+        coeffs, cov = np.polyfit(sample_population_data_df['Year'], sample_population_data_df['Population'], order, cov=True)
+        print(f'Covariance matrix for order {order}:\n{cov}')
 
     # Fit a polynomial of given order to the sample data
     coefficients = np.polyfit(sample_population_data_df['Year'], sample_population_data_df['Population'], order)
@@ -34,9 +38,14 @@ def n_polynomial_fit(order, colour, linestyle):
     
     # Calculate chi-squared value for the fit
     residuals = sample_population_data_df['Population'] - polynomial(sample_population_data_df['Year'])
-    chi_squared = np.sum((residuals ** 2) / polynomial(sample_population_data_df['Year']))
+    chi_squared = np.sum((residuals ** 2))
     chi_squared_values[order] = chi_squared
 
+    # calculate BIC value for the fit
+    n = len(sample_population_data_df['Year'])
+    k = order+1  # number of parameters
+    bic = chi_squared + k * np.log(n)
+    bic_values[order] = bic
 
     return polynomial
 
@@ -55,9 +64,9 @@ def n_polynomial_future_forecast(order, years_ahead):
     return polynomial
 
 
-# Example usage: Fit a polynomial of order 3
+# Example usage: Fit a polynomial of order 1-9
 
-'''
+
 n_polynomial_fit(1, 'red', 'dashed')
 n_polynomial_fit(2, 'green', 'dotted')
 n_polynomial_fit(3, 'orange', 'dashdot')
@@ -68,7 +77,7 @@ n_polynomial_fit(6, 'pink', 'dotted')
 n_polynomial_fit(7, 'gray', 'dashdot')
 n_polynomial_fit(8, 'cyan', 'solid')
 n_polynomial_fit(9, 'magenta', 'dashed')
-'''
+
 
 # Example usage: Forecast a polynomial of order 3 for the next 10 years
 n_polynomial_future_forecast(3, 10)
@@ -84,8 +93,6 @@ plt.title(f'Polynomial Fit of Order')
 plt.legend()
 plt.show()
 
-
-
 # plot a graph of chi-squared values
 plt.plot(list(chi_squared_values.keys()), list(chi_squared_values.values()), marker='o')
 plt.xlabel('Polynomial Order')
@@ -94,12 +101,21 @@ plt.title('Chi-Squared Values for Different Polynomial Orders')
 plt.show()
 
 # plot a graph of chi-squared values per degree of freedom
-plt.plot(list(chi_squared_values.keys()), [chi_squared_values[order] / (len(sample_population_data_df['Year']) - (order)) for order in chi_squared_values.keys()], marker='o')
+plt.plot(list(chi_squared_values.keys()), [chi_squared_values[order] / (len(sample_population_data_df['Year']) - (order+1)) for order in chi_squared_values.keys()], marker='o')
 plt.xlabel('Polynomial Order')
 plt.ylabel('Chi-Squared per Degree of Freedom')
 plt.title('Chi-Squared per Degree of Freedom for Different Polynomial Orders')
 plt.show()
 
+# plot a graph of BIC values
+plt.plot(list(bic_values.keys()), list(bic_values.values()), marker='o')
+plt.xlabel('Polynomial Order')
+plt.ylabel('BIC Value')
+plt.title('BIC Values for Different Polynomial Orders')
+plt.show()
 
+# Find lowest BIC value
+lowest_bic_order = min(bic_values, key=bic_values.get)
+#print(f'Lowest BIC value is for polynomial order {lowest_bic_order} with BIC = {bic_values[lowest_bic_order]}')
 
-print (sample_population_data_df)
+#print (sample_population_data_df)
