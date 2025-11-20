@@ -45,7 +45,8 @@ def n_polynomial_fit(order, colour, linestyle):
     n = len(sample_population_data_df['Year'])
     k = order+1  # number of parameters
     bic = chi_squared + k * np.log(n)
-    bic_values[order] = bic
+    if order > 0:
+        bic_values[order] = bic
 
     return polynomial
 
@@ -66,18 +67,23 @@ def n_polynomial_future_forecast(order, years_ahead):
 
 # Example usage: Fit a polynomial of order 1-9
 
-
 n_polynomial_fit(1, 'red', 'dashed')
 n_polynomial_fit(2, 'green', 'dotted')
 n_polynomial_fit(3, 'orange', 'dashdot')
 n_polynomial_fit(4, 'purple', 'solid')
-
 n_polynomial_fit(5, 'brown', 'dashed')
+
 n_polynomial_fit(6, 'pink', 'dotted')
 n_polynomial_fit(7, 'gray', 'dashdot')
 n_polynomial_fit(8, 'cyan', 'solid')
 n_polynomial_fit(9, 'magenta', 'dashed')
+n_polynomial_fit(10, 'brown', 'dashed')
 
+n_polynomial_fit(11, 'pink', 'dotted')
+n_polynomial_fit(12, 'gray', 'dashdot')
+n_polynomial_fit(13, 'cyan', 'solid')
+n_polynomial_fit(14, 'magenta', 'dashed')
+n_polynomial_fit(50, 'magenta', 'dashed')
 
 # Example usage: Forecast a polynomial of order 3 for the next 10 years
 n_polynomial_future_forecast(3, 10)
@@ -116,6 +122,6 @@ plt.show()
 
 # Find lowest BIC value
 lowest_bic_order = min(bic_values, key=bic_values.get)
-#print(f'Lowest BIC value is for polynomial order {lowest_bic_order} with BIC = {bic_values[lowest_bic_order]}')
+print(f'Lowest BIC value is for polynomial order {lowest_bic_order} with BIC = {bic_values[lowest_bic_order]}')
 
 #print (sample_population_data_df)
