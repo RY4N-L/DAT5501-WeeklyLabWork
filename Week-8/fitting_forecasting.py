@@ -19,6 +19,7 @@ population_data_last_10_years_df = population_data_df[(population_data_df['Year'
 sample_population_data_df = population_data_df[(population_data_df['Year'] > 1900) & (population_data_df['Year'] <= population_data_df['Year'].max() - 10)]
 
 def n_polynomial_fit(order, colour, linestyle):
+    # Fit a polynomial of given order to the sample data and plot
     global chi_squared_values
 
     if order == 2:
@@ -45,7 +46,9 @@ def n_polynomial_fit(order, colour, linestyle):
     n = len(sample_population_data_df['Year'])
     k = order+1  # number of parameters
     bic = chi_squared + k * np.log(n)
-    if order > 0:
+    
+    # Only calculate bic from order 2 to improve y scale 
+    if order > 1:
         bic_values[order] = bic
 
     return polynomial
@@ -63,7 +66,6 @@ def n_polynomial_future_forecast(order, years_ahead):
     # Plot the forecasted curve
     plt.plot(x_values, y_values, label=f'Forecast (Order {order})', linestyle='--')
     return polynomial
-
 
 # Example usage: Fit a polynomial of order 1-9
 
