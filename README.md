@@ -5,6 +5,20 @@ Each folder includes Python scripts demonstrating different programming concepts
 
 ---
 
+---
+
+## 🌟 Highlights
+
+- Built **GUI applications** with Tkinter and tkcalendar (Week‑3 & Week‑5).  
+- Conducted a **group project** analysing global meat consumption vs CO₂ emissions using Our World in Data (Week‑3).  
+- Implemented **unit testing** to validate calculations (Week‑1).  
+- Analyzed **US election data** with fuzzy matching and histograms (Week‑5).  
+- Extended **asset price analysis** to test sorting performance against *n log n* complexity (Week‑8).  
+- Performed **polynomial fitting and forecasting** on global population trends, calculating χ²/dof and BIC to evaluate models (Week‑8).  
+
+---
+
+
 ## 📂 Folder Structure
 
 - **Week-1 📘**
@@ -84,4 +98,13 @@ cd Week-3
 python calendar_printer_gui.py
 ```
 
+---
+## 📝 Outstanding Tasks / To‑Do
 
+- [ ] Complete parameter extraction and covariance matrix analysis for the best polynomial model (Week‑8)  
+- [ ] Estimate uncertainties in parameter values  
+- [ ] Explore alternative models (e.g., exponential fits) for forecasting  
+- [ ] Extend GUI functionality with additional features (e.g., error handling, styling)  
+- [ ] Add more unit tests for robustness across weeks  
+
+---
