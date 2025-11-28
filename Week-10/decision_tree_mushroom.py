@@ -58,6 +58,7 @@ import matplotlib.pyplot as plt
 plt.figure(figsize=(20,10))
 plt.savefig('decision_tree.png', dpi=100)
 plot_tree(clf, feature_names=x.columns, class_names=y['poisonous'].values, filled=True)
+plt.tight_layout()
 plt.show()
 
 
