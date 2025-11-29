@@ -1,3 +1,5 @@
+## Date Duration Calculator GUI Application ##
+
 import numpy as np
 import tkinter as tk
 from tkcalendar import DateEntry
@@ -5,7 +7,16 @@ from tkcalendar import DateEntry
 today = np.datetime64('today', 'D').astype(str)  # Get today's date as a string in 'YYYY-MM-DD' format
 
 def calculate_duration():
-    # Calculate the duration in days between start and end dates
+    """
+    Calculate the duration in days between two dates from GUI input and display the result in the GUI.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+
     start_date = np.datetime64(start_calendar.get_date(), 'D')
     use_today = use_today_var.get()
 
@@ -18,7 +29,16 @@ def calculate_duration():
     result_label.config(text=f"Duration: {duration} days")
 
 def toggle_end_date():
-    # Enable or disable end date selection based on checkbox
+    """
+    Enable or disable the end date selection based on the checkbox state.
+    
+    Paremeters:
+    None
+
+    Returns:
+    None
+    """
+    
     if use_today_var.get():
         # Set end date to today and disable calendar if checkbox is selected
         end_calendar.set_date(today)

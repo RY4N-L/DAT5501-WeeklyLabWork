@@ -1,8 +1,22 @@
+## Calendar Printer Application ##
+
 def CalendarPrinter():
+    """
+    Print a calendar structure based on user input, runs in a loop until user decides to quit.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+
+    
     while True: # Loop until user enters a q after printing calendar
         row_counter = int(0)
         first_row = True
-        days_dict = {
+
+        days_dict = { # Dictionary to map the day of the week to the number of spaces to leave in the first row of the calendar
         "monday": 1,
         "tuesday": 2,
         "wednesday": 3,
@@ -28,7 +42,7 @@ def CalendarPrinter():
             except KeyError as e:
                 print("\nInvalid input, please enter the full name of the day e.g. 'monday' or 'Sunday'")
 
-
+        # Print the calendar structure
         for i in range (days_in_month):
             row_counter += 1
             current_day = str(i+1)
@@ -47,10 +61,11 @@ def CalendarPrinter():
 
             else: print(current_day + " ", end="")
 
-        exit = str(input("\nPlease press r to retry or q to quit"))
+        exit = str(input("\nPlease press r to retry or q to quit")) # Ask user if they want to quit or retry
 
         if exit == 'q':
             print("CALENDAR PRINTER CLOSED")
             break
 
+# Run the CalendarPrinter function if this file is executed directly
 CalendarPrinter()

@@ -1,3 +1,5 @@
+## Calendar Printer GUI Application ##
+
 import tkinter as tk
 from tkinter import messagebox
 
@@ -13,11 +15,10 @@ days_dict = {
 }
 
 def generate_calendar(days_entry, day_var, calendar_inner_frame): 
-    
     """
     Generate a calendar structure based on user input.
 
-    parameters:
+    Parameters:
     days_entry (tk.Entry): Entry widget for number of days in the month.
     day_var (tk.StringVar): Variable holding the starting day of the week.
     calendar_inner_frame (tk.Frame): Frame to display the generated calendar.
@@ -66,9 +67,11 @@ def generate_calendar(days_entry, day_var, calendar_inner_frame):
             row += 1
 
 def setup_calendar_gui():
-
     """
     Set up the main GUI window for the calendar printer and run the event loop.
+
+    Parameters:
+    None
 
     Returns:
     None

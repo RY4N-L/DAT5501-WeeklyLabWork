@@ -1,24 +1,29 @@
+## Population vs Meat Consumption Analysis ##
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-# --- CONFIGURABLE TIME INTERVAL ---
-START_YEAR = 1990
-END_YEAR = 2013
+# Read the dataset
+df = pd.read_csv('meat_population_data.csv') # ensure cd is DAT5501-WeeklyLabWork\Week-3\Group-Presentation
 
-# --- READ DATA ---
-# Update the filename and column names as needed
-df = pd.read_csv('Group-Presentation/meat_population_data.csv')
-df.columns = [col.strip() for col in df.columns]
+# Clean column names (remove extra spaces)
+df.columns = [col.strip() for col in df.columns] 
 
-# --- FILTER DATA BY YEAR ---
-filtered = df[(df['Year'] >= START_YEAR) & (df['Year'] <= END_YEAR)]
+# Variables for filtering between yeards
+start_year = 1990
+end_year = 2013
+
+
+# Filtering data between years
+filtered = df[(df['Year'] >= start_year) & (df['Year'] <= end_year)]
 years = filtered['Year']
+
+# Convert units for better readability
 population = filtered['World population'] / 1e9  # Convert to billions
 meat = filtered['Total Meat Consumption Per Year (tonnes)'] / 1e6
 
-# --- PLOT ---
-
+# Plotting
 fig, ax1 = plt.subplots(figsize=(10,6))
 color1 = 'tab:blue'
 ax1.set_xlabel('Year', fontsize=15)
@@ -35,14 +40,14 @@ line2, = ax2.plot(years, meat, color=color2, label='Meat Consumption Growth')
 ax2.set_ylabel('Meat Consumption (million tonnes)', color=color2, fontsize=15)
 ax2.tick_params(axis='y', labelcolor=color2)
 
-plt.title(f'Population and Global Meat Consumption Growth ({START_YEAR}-{END_YEAR})', fontsize=20)
+plt.title(f'Population and Global Meat Consumption Growth ({start_year}-{end_year})', fontsize=20)
+
 # Combine both lines in one legend
 lines = [line1, line2]
 labels = [line.get_label() for line in lines]
 ax1.legend(lines, labels, loc='upper left')
 fig.tight_layout()
 plt.show()
-
 
 # Calculate percentage change per year (filtered)
 population_pct = filtered['World population'].pct_change() * 100
@@ -51,8 +56,8 @@ meat_pct = filtered['Total Meat Consumption Per Year (tonnes)'].pct_change() * 1
 # Bar chart for percentage change
 x = np.arange(len(years)-1)
 bar_width = 0.4
-
 fig, ax = plt.subplots(figsize=(12,6))
+
 ax.bar(x - bar_width/2, population_pct[1:], width=bar_width, label='Population % Change', color='tab:blue', hatch = '//')
 ax.bar(x + bar_width/2, meat_pct[1:], width=bar_width, label='Meat Consumption % Change', color='tab:red')
 ax.set_xticks(x)
@@ -62,8 +67,9 @@ ax.set_ylabel('Percentage Change (%)', fontsize=15)
 ax.set_title('Year-on-Year Percentage Change: World Population vs Global Meat Consumption', fontsize=20)
 ax.legend()
 fig.tight_layout()
-#plt.show()
+plt.show()
 
+# Calculate projected growth from 2000 to 2050 for both population and meat consumption (used as statistic in presentation)
 pop_2000 = df[df['Year'] == 2000]['World population'].values[0]
 pop_2050 = df[df['Year'] == 2050]['World population'].values[0]
 pct_change_pop = ((pop_2050 - pop_2000) / pop_2000) * 100

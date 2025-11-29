@@ -1,17 +1,18 @@
+## US Election Histogram Analysis ##
+
 import pandas as pd
 import matplotlib.pyplot as plt
 from fuzzywuzzy import process
 
 # Load the CSV with semicolon delimiter
-election_data_df = pd.read_csv('DAT5501_lab/Week-5/US-2016-primary.csv', delimiter=';')
+election_data_df = pd.read_csv('US-2016-primary.csv', delimiter=';')
 election_data_df.fillna(0, inplace=True)  # Fill NaN values with 0
 
 # List of known candidate names
 candidates = election_data_df['candidate'].unique()
 
+# Prompt user for candidate name and loop until valid input is given
 while True:
-    # Prompt user for candidate name and loop until valid input is given
-
     candidate = input("Please enter the candidate's name (e.g. John Kasich):")
 
     # Use fuzzy matching to find the closest candidate name
@@ -24,6 +25,7 @@ while True:
     elif score >= 80:  # If the match score is high enough, use the matched name
         print(f"Did you mean: '{matched_candidate}'?... Matched with score {score}")
         confirm = input("Type 'y' to confirm, or any other key to try again: ")
+        
         if confirm.lower() == 'y':
             candidate = matched_candidate
             candidate_df = election_data_df[election_data_df['candidate'] == candidate]
@@ -60,7 +62,7 @@ state_fractions = state_total_candidate_votes / state_total_votes
 # Find the fraction of votes of each state compared to total votes for the candidate
 candidate_vote_fractions = state_total_candidate_votes / total_candidate_votes
 
-#sum candidate_vote_fractions should be 1
+# Sum of candidate_vote_fractions should be 1 (uncomment for testing purposes)
 #print(candidate_vote_fractions)
 #print(f"Total of vote fractions = {candidate_vote_fractions.sum()}")
 

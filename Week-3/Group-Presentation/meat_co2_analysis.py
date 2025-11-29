@@ -1,9 +1,11 @@
+## Meat Consumption vs CO2 Emissions Analysis ##
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Read the dataset
-df = pd.read_csv('DAT5501_lab/Week-3/Group-Presentation/meat_co2_data.csv')
+df = pd.read_csv('meat_co2_data.csv') # ensure cd is DAT5501-WeeklyLabWork\Week-3\Group-Presentation 
 
 # Clean column names (remove extra spaces)
 df.columns = [col.strip() for col in df.columns]
@@ -15,17 +17,20 @@ co2 = df['Annual CO2 emissions (tonnes)']
 
 # Plotting
 fig, ax1 = plt.subplots(figsize=(10,6))
+
 color1 = 'tab:blue'
+color2 = 'tab:red'
+
 ax1.set_xlabel('Year', fontsize=15)
 ax1.set_ylabel('CO₂ Emissions (tonnes)', color=color1, fontsize=15)
 
-line1, = ax1.plot(years, co2, color=color1, label='Global CO₂ Emissions')
-ax1.tick_params(axis='y', labelcolor=color1)
-
 ax2 = ax1.twinx()
-color2 = 'tab:red'
-line2, = ax2.plot(years, meat, color=color2, label='Global Meat Consumption', linestyle=':')
 ax2.set_ylabel('Meat Consumption (kg/person)', color=color2, fontsize=15)
+
+line1, = ax1.plot(years, co2, color=color1, label='Global CO₂ Emissions')
+line2, = ax2.plot(years, meat, color=color2, label='Global Meat Consumption', linestyle=':')
+
+ax1.tick_params(axis='y', labelcolor=color1)
 ax2.tick_params(axis='y', labelcolor=color2)
 
 plt.title('Global Annual CO₂ Emissions and Meat Consumption (1990-2022)', fontsize=20)
@@ -47,12 +52,16 @@ bar_width = 0.4
 
 # Plotting percentage changes
 fig, ax = plt.subplots(figsize=(12,6))
+
 ax.bar(x - bar_width/2, co2_pct, width=bar_width, label='CO₂ % Change', color='tab:blue')
 ax.bar(x + bar_width/2, meat_pct, width=bar_width, label='Meat % Change', color='tab:red')
+
 ax.set_xticks(x)
 ax.set_xticklabels(years, rotation=45)
+
 ax.set_xlabel('Year')
 ax.set_ylabel('Percentage Change (%)')
+
 ax.set_title('Year-on-Year Percentage Change: CO₂ Emissions vs Meat Consumption (1990-2022)')
 ax.legend()
 fig.tight_layout()

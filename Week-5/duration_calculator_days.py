@@ -1,15 +1,23 @@
+## Date Duration Calculator Application ##
+
 import numpy as np
-import re
-date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$") # regular expression pattern for YYYY-MM-DD format ensures 4 digits-2 digits-2 digits (integers only)
+import re # Regex module used for date format validation
+
+date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$") # regex pattern for YYYY-MM-DD format ensures 4 digits-2 digits-2 digits (integers only)
 
 def calculate_duration_in_days():
     """
-    Calculate the duration in days between two dates.
+    Calculate the duration in days between two dates, runs in a loop until valid dates are entered.
+
+    Paermeters:
+    None
 
     Returns:
     int: The duration in days between the two dates.
     """
+
     today = np.datetime64('today', 'D')
+
     while True:
     # Loop until valid start date is entered
         start_date_str = input("Please enter the start date (YYYY-MM-DD): ")
@@ -21,7 +29,7 @@ def calculate_duration_in_days():
         try:
             # Validate date values
             start_date = np.datetime64(start_date_str, 'D')
-            
+
             # Exit loop if start date is valid
             break
         
@@ -38,7 +46,6 @@ def calculate_duration_in_days():
             continue
 
         try:
-
             # Validate date format
             end_date = np.datetime64(end_date_str, 'D')
             

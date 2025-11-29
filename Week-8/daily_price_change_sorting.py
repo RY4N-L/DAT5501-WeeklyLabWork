@@ -1,10 +1,12 @@
+## Daily asset price change sorting time analysis ##
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import numpy as np
 
 # Load the CSV 
-asset_price_data_df = pd.read_csv('DAT5501_lab/Week-8/asset_price_data.csv')
+asset_price_data_df = pd.read_csv('asset_price_data.csv')
 
 # Sort the dates in ascending order
 asset_price_data_df['Date'] = pd.to_datetime(asset_price_data_df['Date'], format='%m/%d/%Y')
@@ -25,9 +27,7 @@ times = []
 
 # Measure sorting time for increasing sizes of the array from 7 to the full length of array
 for i in range(7, len(price_changes)):
-    
     array_to_sort = price_changes[:i] # Get the sub-array to sort (increases by 1 each iteration)
-    
 
     # Sort the array and measure the time taken
     start_time = time.perf_counter()
@@ -47,12 +47,16 @@ n_log_n = n_log_n / np.max(n_log_n) * np.max(times)  # Normalize to match the sc
 # Plot figure
 plt.figure(figsize=(8, 4))
 
+# Plot line graph
+plt.plot(x_values, times, linestyle='-', color='blue')
 
-plt.plot(x_values, times, linestyle='-', color='blue') # Plot line graph
-#plt.scatter(x_values, times, marker='o', linestyle='-', color='blue') # Plot scatter  
-plt.plot(x_values, n_log_n, label='n log n', color='red') # Plot n log n for comparison
+# Plot scatter (uncomment to see scatter points)
+#plt.scatter(x_values, times, marker='o', linestyle='-', color='blue')  
+
+# Plot n log n for comparison
+plt.plot(x_values, n_log_n, label='n log n', color='red') 
+
 plt.legend()
-
 plt.title('Daily Price Changes to Sort vs Sorting Time')
 plt.xlabel('Number of Price Changes Sorted')
 plt.ylabel('Time')
